@@ -62,7 +62,6 @@ include("includes/header.php");
 
 			<div id="myForm">
 			<p align="center"><font color="green"><b>ADMIN LOGIN</font></b></p>
-			
 			<form action="" method="post" style="table-layout:auto" method="post">
 			</br>
 	      	        </br>
@@ -86,7 +85,7 @@ include("includes/header.php");
 			<span style="text-align:right;"><input type="submit" SIZE="70"  name="submit" value="login" id="submit"></span>
 			 <a href="Admin_forgot.php">forgot password</a>
 			 <br/>
-			 
+			 <a href="index.php">back</a>
 			</br>
 		    
                     <?php
@@ -106,30 +105,23 @@ include("includes/header.php");
 		  
 					
 			$query="SELECT * FROM Admin WHERE username='$username' and password='$password3'" or die(mysqli_error($conn));   
-              $result=mysqli_query($conn, $query) or die(mysqli_error($conn));  
-	  $count=mysqli_num_rows($result); 
+              $result=mysqli_query($conn,$query) or die(mysqli_error($conn)) ;
+             $count=mysqli_num_rows($result); 
+             if($count==1){
+             $row=mysqli_fetch_array($result);
+           header('Location:AddItem.php');
+          $_SESSION['username']=$row['username'];
+          $_SESSION['admin']=$row['type'];	
+          $_SESSION['Fname']=$row['Full_Names'];  
+          echo $row['type'];
+				
+             }
+        else {
+        	//$_SESSION['username0']=$row['username'];
+        	 echo "<span style='color:green;background:white;text-align:right;'>wrong password or username please try again</span>" ;
+        }
 
-	  if($count==1) 
-              { // user found
-		// check if user is admin or user
-		$logged_in=mysqli_fetch_array($result);
-		//$login = mysqli_fetch_assoc($results);
-		header('Location:AddItem.php');
-		if ($logged_in['user_type'] == 'admin') {
-          
-		     $_SESSION['admin'] = $logged_in;
-		     $_SESSION['success']  = "You are now logged in";
-	                           
-          
-			}
-		}else {
-		array_push($errors, "Wrong username/password combination");
-		}
-	}}
-	
-	
-	
-      
+       }}
 ?>
 
 </form>
@@ -147,3 +139,4 @@ include("includes/footer.php");
 ?>
 </body>
 </html>
+

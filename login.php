@@ -102,7 +102,7 @@ include("includes/header.php");
 			$password2=sha1($password1);
 			$password3=crypt($password2,"jo");
 					
-			//$sql="SELECT * FROM User WHERE username='$username' and password='$password3'" or die(mysqli_error());   
+			$sql="SELECT * FROM User WHERE username='$username' and password='$password3'" or die(mysqli_error());   
               $result=mysqli_query($conn,"SELECT * FROM User WHERE username='$username' and password='$password3'") or die(mysqli_error($conn)) ;
              $count=mysqli_num_rows($result); 
 

@@ -1,11 +1,17 @@
 <?php
+session_start();
+/*if(!$_SESSION['username'])
 
+header("location:index.php");
+}*/
 include("includes/header.php");
 include("includes/connection.php");
+
 
 ?>
 <title>cargo registration</title>
 <hr/>
+
 
 <p align="center"><h1> ADDING CARGO TO BE SENT </h1></p>
 <hr/>
@@ -15,7 +21,7 @@ include("includes/connection.php");
         <li ><a href="logout.php">logout</a></li>
         <li><a href="AddItem.php">add cargo</a></li>
         <li><a href="CargoReceiption.php">receiption confirmation</a></li> 
-		    <li><a href="UpdateDel.php">UPDATE/DELETE cargo</a></li>     
+        <li><a href="UpdateDel.php">UPDATE/DELETE cargo</a></li>     
 		 <?php
         
         	
@@ -23,10 +29,6 @@ include("includes/connection.php");
        echo  "<li><a href='addDel.php'>delete user</a></li>";   
 	   echo "<li><a href='Change_password.php'>change password</a></li> "; 
 	 
-	  
-	  
-	      echo "<li><a href='userChange.php'>change password</a></li> "; 
-	   
 		?> 
     </ul>
 </nav>
@@ -147,7 +149,7 @@ else{
            $name=$_POST["name"];
            $name=  stripslashes($name);
 			$name= strip_tags($name);
-			$name= mysqlI_real_escape_string($conn,$name);
+			$name= mysqli_real_escape_string($conn,$name);
 			 
 			$Sname=stripslashes($_POST["senderN"]);
 			$Sname=strip_tags($_POST["senderN"]);
