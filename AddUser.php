@@ -220,8 +220,9 @@ if($_FILES["fileUpload"]["name"] != "")
 {  
 if(copy($_FILES["fileUpload"]["tmp_name"],"images/".$_FILES["fileUpload"]["name"]))  
 {  
-$sql=mysqli_query($conn,"insert into User Values('$_POST[phone]','$_POST[name]','$_POST[email]',
-'$_POST[location]','$_POST[username]','$password3', '$_POST[cat]','',  '".$_FILES["fileUpload"]["name"]."' )") or die("username or email already in use");
+	$sql=mysqli_query($conn,"insert into User (PhoneNumber, Full_Names, Email, Residence, Username, Password, type) Values('$_POST[phone]','$_POST[name]','$_POST[email]','$_POST[location]','$_POST[username]','$password3', '$_POST[cat]')") 
+	or die("username or email already in use");
+	
 }}
 if(!$sql)
 {

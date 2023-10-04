@@ -4,10 +4,20 @@ session_start();
 require('fpdf.php');
 $SN=$_REQUEST["cargoId"];
 $username=$_REQUEST['username'];
-mysql_connect("localhost","root","");
-mysql_select_db("cargo");
-$sql=mysql_query("select * from cargo_description where Serial_Number='$SN'");
-$row=mysql_fetch_array($sql);
+
+
+// Establish a mysqli connection
+$conn = mysqli_connect("localhost", "root", "root");
+
+// Check if the connection was successful
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+mysqli_connect("localhost","root","root");
+mysqli_select_db($conn,"cargo");
+$sql=mysqli_query($conn,"select * from cargo_description where Serial_Number='$SN'");
+$row=mysqli_fetch_array($sql);
 
 class PDF extends FPDF
 {

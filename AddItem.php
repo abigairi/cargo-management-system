@@ -182,7 +182,8 @@ else{
 		$ReceiversNum=	$code.$Rtel;
 		reset1();
 
-$sql=mysqli_query($conn,"insert into cargo_description values('',' $name','$Sname','$SendersNum','$RName','$ReceiversNum','$sentFrom','$sentTo',now(),'','null')") or die(mysqli_error($conn));
+		$sql = mysqli_query($conn, "insert into cargo_description(name, Sender_Name, Sender_Phone, Reciever_Name, Reciever_Phone, Sent_From, Sent_To, Time_Sent, Time_Received) values('$name','$Sname','$SendersNum','$RName','$ReceiversNum','$sentFrom','$sentTo',now(),NULL)") or die(mysqli_error($conn));
+
 if(!$sql)
 {
 	echo "faillure";
@@ -195,9 +196,9 @@ else
 	$row=mysqli_fetch_array($sql4);
 	$sn=$row["Serial_Number"];
 	echo "<font color='green'>".$sn."<font/>";
-	$fill1="Good Day ".$_POST["ReceiverN"]." your ". $_POST["name"] ." has been sent from  ".$_POST["sentFrom"]." will be delivered to ".$_POST["sentTo"]."  you will be informed upon delivery and the package  serial number is "." $sn." ." , served by  ". $_SESSION['Fname']."  Cargo Agency";
+	$fill1="Good Day ".$_POST["ReceiverN"]." your ". $_POST["name"] ." has been sent from  ".$_POST["sentFrom"]." will be delivered to ".$_POST["sentTo"]."  you will be informed upon delivery and the package  serial number is "." $sn." ." , served by  ". $_SESSION['name']."  Cargo Agency";
   
-   echo"<a href='pdf/index3.php?cargoId=$row[Serial_Number] & username=$namez'>get the receipt</a>";
+   echo"<a href='pdf/index3.php?cargoId=$row[Serial_Number] & username=$name'>get the receipt</a>";
   reset1();
   $sql1= mysqli_query($conn,"insert into ozekimessageout values('','0703922095','$ReceiversNum','$fill1',now(),'','','send','','SMS:TEXT' )");
  }
