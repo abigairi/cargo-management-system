@@ -14,10 +14,10 @@ include("includes/connection.php");
 <?php
  if($_SESSION['admin']=='ADMIN'){
 $var1= $_SESSION["username"];
-$query=mysql_query("SELECT Full_Names,photo FROM admin where username='$var1' ") or die(mysql_error());
+$query=mysqli_query("SELECT Full_Names,photo FROM admin where username='$var1' ") or die(mysqli_error());
  ?>
 <?php
-while($row=mysql_fetch_array($query)){
+while($row=mysqli_fetch_array($query)){
 ?>
 <img src="images/<?=$row["photo"];?>"width="50"height="50"border="2" alt="<? echo $var?>" >
 <?php
@@ -27,10 +27,10 @@ echo $row["Full_Names"]."  "."logged in";
 else
 {
 $var1= $_SESSION["username"];
-$query=mysql_query("SELECT Full_Names,photo FROM user where username='$var1' ") or die(mysql_error());
+$query=mysqli_query("SELECT Full_Names,photo FROM user where username='$var1' ") or die(mysqli_error());
  ?>
 <?php
-while($row=mysql_fetch_array($query)){
+while($row=mysqli_fetch_array($query)){
 ?>
 <img src="images/<?=$row["photo"];?>"width="50"height="50"border="2" alt="<? echo $var?>" >
 <?php
@@ -84,21 +84,21 @@ if(isset($_POST["submit"]))
 {
  $EmpNo=stripslashes($_POST["searchid"]);
 $EmpNo=strip_tags($_POST["searchid"]);
-$EmpNo=mysql_real_escape_string($_POST["searchid"]);
+$EmpNo=mysqli_real_escape_string($_POST["searchid"]);
 $EmpNo=$_POST["searchid"];
 if($_POST["searchid"]=="")
 {
 echo "<i><font color='green'> no search key entered</font></i>";
 }
 else{
-$sql=mysql_query("select * from cargo_description where Serial_Number ='$EmpNo '") or die(mysql_error());
-$num=mysql_num_rows($sql);
+$sql=mysqli_query("select * from cargo_description where Serial_Number ='$EmpNo '") or die(mysqli_error());
+$num=mysqli_num_rows($sql);
 if($num=='0')
 {
 echo "<i><font color='blue'>no records found for serial number</font></i> ". $EmpNo." ";
 }
 else
-$row=mysql_fetch_array($sql);
+$row=mysqli_fetch_array($sql);
 }}
 ?>
 <br/>
@@ -194,12 +194,12 @@ echo "<i><font color='blue'>fields should not be empty</font></i>";
 }
 
 else{
-$sql=mysql_query("update  cargo_description set Name='$cargo' ,Sender_Name='$Sname', Sender_Phone='$Sphone', Reciever_Name='$Rname',  Reciever_phone='$Rphone', Sent_From='$Sfrom', Sent_To='$sto' where Serial_Number='$serial'") or die(mysql_error());
+$sql=mysqli_query("update  cargo_description set Name='$cargo' ,Sender_Name='$Sname', Sender_Phone='$Sphone', Reciever_Name='$Rname',  Reciever_phone='$Rphone', Sent_From='$Sfrom', Sent_To='$sto' where Serial_Number='$serial'") or die(mysqli_error());
 if($sql)
 {
 echo "<font color='green'> <i>You have successfully updated <font color='red'>".$cargo. ",</font> ". $Sname."'s  cargo  with  serial number <font color='red'><b>".$serial." </b></font></font></i>";
 $fill1="Hi we made the changes u resqueted and the cargo to be sent is  ".$cargo."  and the receiver is  ".$Sname."  sorry for any inconvience,   served by  ". $_SESSION['Fname']."  Cargo Agency";
- $sql1= mysql_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fill1',now(),'','','send','','SMS:TEXT' )");
+ $sql1= mysqli_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fill1',now(),'','','send','','SMS:TEXT' )");
  echo $_POST["Sender_Phone"];
 }
 }
@@ -220,14 +220,14 @@ echo "<i><font color='blue'>fields should not be empty</font></i>";
 }
 else
 {
-$sql=mysql_query("delete from cargo_description  where Serial_Number='$serial'") or die(mysql_error());
+$sql=mysqli_query("delete from cargo_description  where Serial_Number='$serial'") or die(mysqli_error());
 if($sql)
 {
 $fills="Hi we made the changes u resqueted and the cargo serial number ".$serial."  transaction has been reverted and wont be sent, Cargo Agency";
- $sql1= mysql_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fills',now(),'','','send','','SMS:TEXT' )");
+ $sql1= mysqli_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fills',now(),'','','send','','SMS:TEXT' )");
  
  $fillz="Hi  there has been  changes with  the cargo serial number ".$serial."  you were to be sent  transaction has been reverted and wont be sent,   served by  ". $_SESSION['Fname']."   Cargo Agency";
- $sql1= mysql_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fillz',now(),'','','send','','SMS:TEXT' )");
+ $sql1= mysqli_query("insert into ozekimessageout values('','0703922095','$_POST[Sender_Phone]','$fillz',now(),'','','send','','SMS:TEXT' )");
 echo "<font color='green'> <i>You have successfully deleted <font color='red'>".$cargo. ",</font> ". $Sname."'s  cargo  with  serial number <font color='red'><b>".$serial." </b></font></font></i>";
 }
 }}
